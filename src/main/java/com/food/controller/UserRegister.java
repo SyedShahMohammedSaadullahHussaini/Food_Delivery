@@ -25,32 +25,19 @@ public class UserRegister extends HttpServlet {
 	
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uid = request.getParameter("userId");
+		
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phoneNo");
 		String pass = request.getParameter("password");
-		String address = request.getParameter("address");
-		String city = request.getParameter("city");
-		String state = request.getParameter("state");
 		
         int otp = (int)(Math.random() * 900000) + 100000;
-        
-        
-        
-
-        
         HttpSession session = request.getSession();
         session.setAttribute("otp", otp);        
-        session.setAttribute("email", email);
-        
-        session.setAttribute("userId", uid);
+        session.setAttribute("email", email);    
         session.setAttribute("name", name);
         session.setAttribute("phoneNo", phone);
         session.setAttribute("password", pass);
-        session.setAttribute("address", address);
-        session.setAttribute("city", city);
-        session.setAttribute("state", state);
 
         String subject = "Your OTP for Registration";
         String message = ""
@@ -105,7 +92,10 @@ public class UserRegister extends HttpServlet {
        
         if (mailSent) {
             // Redirect to OTP verification page
-            response.sendRedirect("otpverify.jsp");
+			/* response.sendRedirect("otpverify.jsp"); */
+        	response.setContentType("text/plain");
+        	response.getWriter().write("otp_sent");
+
         } else {
             response.getWriter().println("Failed to send OTP. Please try again.");
         }

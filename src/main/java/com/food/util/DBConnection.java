@@ -13,9 +13,13 @@ public class DBConnection {
 //			String pass="9600tharun"; mian DB
 			
 //			Testing email
-			String url="jdbc:mysql://172.26.46.248/fda";
-			String user="root";
-			String pass="MySql@!vinay_06";
+//			String url="jdbc:mysql://172.26.46.248/fda";
+//			String user="root";
+//			String pass="MySql@!vinay_06";
+			
+			String url = "jdbc:mysql://metro.proxy.rlwy.net:12100/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            String user = "root";
+            String pass = "FpidaRuGhzzXiOcnJiwGXakxOiEONEzU"; 
 			
 			Connection c = DriverManager.getConnection(url,user,pass);
 			System.out.println("connected to DB");

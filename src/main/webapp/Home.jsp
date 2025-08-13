@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="/Main/navbar.jsp" %>
+<%@ include file="navbar.jsp" %>
 
 <a href="sendrest" class="btn btn-primary">
     View Restaurants

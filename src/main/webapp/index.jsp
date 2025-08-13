@@ -256,14 +256,7 @@
   position: relative;
 } */
 
-.close {
-  
-  margin-left:100%;
-  margin-bottom:10px;
-  
-  font-size: 22px;
-  cursor: pointer;
-}
+
 .box{
 width: calc(100% + 0.5rem);
     display: flex

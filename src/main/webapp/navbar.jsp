@@ -145,6 +145,12 @@
     </style>
   </head>
   <body>
+  <jsp:include page="auth.jsp" />
+  <!-- OTP Popup (included but hidden) -->
+<div id="otpContainer">
+  <jsp:include page="otpverify.jsp" />
+</div>
+
     <div class="navbar">
       <div class="logo">FoodieExpress</div>
 
@@ -175,8 +181,8 @@
       </div>
 
       <div class="auth-links">
-        <a href="#">Log in</a>
-        <a href="#">Sign up</a>
+        <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
+        <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
       </div>
     </div>
 
@@ -201,6 +207,7 @@
           cityDropdown.style.display = "none";
         }
       });
+      
     </script>
   </body>
 </html>

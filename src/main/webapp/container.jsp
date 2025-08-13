@@ -145,7 +145,7 @@
     </style>
 </head>
  <body >
-<%@ include file="/Main/navbar.jsp" %>
+<%@ include file="navbar.jsp" %>
    <div class="outer">
  <!-- Sticky Filters -->
     <div class="filters-bar">

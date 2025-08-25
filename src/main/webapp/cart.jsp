@@ -1,29 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.List" %>
-<%
-  List<String> cart = (List<String>) session.getAttribute("cart");
-%>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Your Cart</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>My Cart</title>
 </head>
 <body>
-  <div class="container mt-4">
     <h2>Your Cart</h2>
-    <ul class="list-group mb-3">
-      <% if (cart != null) {
-        for (String item : cart) {
-      %>
-        <li class="list-group-item"><%= item %></li>
-      <% }} else { %>
-        <li class="list-group-item">Your cart is empty.</li>
-      <% } %>
-    </ul>
-    <a href="order-summary.jsp" class="btn btn-primary">Proceed to Checkout</a>
-  </div>
+    <%
+        Map<String, Map<String, String>> cart = (Map<String, Map<String, String>>) session.getAttribute("cart");
+        if (cart == null || cart.isEmpty()) {
+    %>
+        <p>Your cart is empty.</p>
+    <%
+        } else {
+    %>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            <%
+                double grandTotal = 0;
+                for (Map<String, String> item : cart.values()) {
+                    String name = item.get("name");
+                    double price = Double.parseDouble(item.get("price"));
+                    int quantity = Integer.parseInt(item.get("quantity"));
+                    double total = price * quantity;
+                    grandTotal += total;
+            %>
+                <tr>
+                    <td><%= name %></td>
+                    <td>Rs. <%= price %></td>
+                    <td><%= quantity %></td>
+                    <td>Rs. <%= total %></td>
+                </tr>
+            <% } %>
+            <tr>
+                <td colspan="3" align="right"><strong>Grand Total</strong></td>
+                <td><strong>Rs. <%= grandTotal %></strong></td>
+            </tr>
+        </table>
+    <%
+        }
+    %>
 </body>
 </html>

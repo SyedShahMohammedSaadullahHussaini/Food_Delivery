@@ -1,15 +1,16 @@
 package com.food.controller;
 
 import java.io.IOException;
+
+import com.foodexpress.updatedDAO.UserDAO;
+import com.foodexpress.updatedDTO.User;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import com.User.dto.User;
-import com.food.dao.UserDAO;
-
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -28,12 +29,26 @@ public class UserLogin extends HttpServlet {
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 		
-		User user = dao.loginUser(email, pass);
-		if(user!=null) {
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-		}
+		User user = dao.validateUser(email, pass);
+
+        if (user != null) {
+            // ✅ login success → store user in session
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUser", user);
+
+            // Forward to DisplayRestaurant servlet
+            RequestDispatcher rd = request.getRequestDispatcher("/DisplayRestaurant");
+            rd.forward(request, response);
+
+            // OR, if you want browser URL to change:
+            // response.sendRedirect("DisplayRestaurant");
+
+        } else {
+            // ❌ login failed → show error
+            request.setAttribute("errorMessage", "Invalid Email or Password");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+        }
 	}
 
 }

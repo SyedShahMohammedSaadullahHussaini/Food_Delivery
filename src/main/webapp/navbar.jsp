@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -157,17 +158,15 @@
       <div class="search-container">
         <div class="location" id="locationSelector">
           <i class="fa-solid fa-location-dot"></i>
-          <span id="selectedCity">Siliguri</span>
+          <span id="selectedCity">Current Location</span>
           <i class="fa-solid fa-caret-down" style="margin-left: 5px"></i>
 
           <!-- Dropdown Menu -->
           <div class="dropdown" id="cityDropdown">
+            <div onclick="selectCity('Bengaluru')">Bengaluru</div>
             <div onclick="selectCity('Delhi')">Delhi</div>
             <div onclick="selectCity('Mumbai')">Mumbai</div>
-            <div onclick="selectCity('Kolkata')">Kolkata</div>
-            <div onclick="selectCity('Bengaluru')">Bengaluru</div>
-            <div onclick="selectCity('Chennai')">Chennai</div>
-            <div onclick="selectCity('Siliguri')">Siliguri</div>
+            <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
           </div>
         </div>
 
@@ -180,10 +179,19 @@
         </div>
       </div>
 
-      <div class="auth-links">
-        <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
-        <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
-      </div>
+     <div class="auth-links">
+	  <c:choose>
+	    <c:when test="${not empty sessionScope.currentUser}">
+	      <span>Welcome, ${sessionScope.currentUser.uName}</span>
+	      <a href="LogoutServlet">Logout</a>
+	    </c:when>
+	    <c:otherwise>
+	      <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
+	      <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
+	    </c:otherwise>
+	  </c:choose>
+	</div>
+
     </div>
 
     <script>

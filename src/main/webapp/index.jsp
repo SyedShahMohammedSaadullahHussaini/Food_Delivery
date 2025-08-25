@@ -359,12 +359,12 @@ padding: 1.3rem 1.2rem;
       <source src="https://b.zmtcdn.com/data/file_assets/2627bbed9d6c068e50d2aadcca11ddbb1743095810.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-    <div class="hero-overlay"></div>
+    <div class="hero-overlay"></div >
     <div class="hero-content">
       <h1>FoodieExpress</h1>
       <h1>Delicious Food Delivered</h1>
       <p>Experience the best meals from top restaurants at your doorstep.</p>
-		<a href="sendrest">Explore</a>
+		<a href="DisplayRestaurant">Explore</a>
     </div>
   </section>
 

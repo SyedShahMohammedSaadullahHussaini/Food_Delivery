@@ -153,8 +153,8 @@ public class object extends HttpServlet {
                 true
             ));
 
-        request.setAttribute("restaurants", restaurants);
-        request.getRequestDispatcher("container.jsp").forward(request, response);
+//        request.setAttribute("restaurants", restaurants);
+//        request.getRequestDispatcher("container.jsp").forward(request, response);
     }
 }
 

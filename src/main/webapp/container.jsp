@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*, demo.Restaurants" %>
+<%@ page import="java.util.*, com.foodexpress.updatedDTO.Restaurant" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,65 +11,35 @@
             font-family: Arial, sans-serif;
         }
 
-        
-        .filters-bar {
-            /* position: sticky;
-            top: 0;
-            background-color: white;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px solid #ddd;
+        /* Outer container */
+        .outer {
             width: 100%;
-            border-radius: 5px; */
-            display: flex;
-    flex-wrap: wrap;
-    padding: 10px 15px;
-    position: sticky;
-    background-color: rgb(255, 255, 255);
-    z-index: 2;
-    transition: top 0.5s ease-in-out;
-    height: 75px;
-}
-
-        .filters-bar button
-         {
-            /* adding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    cursor: pointer; */
-    border: 1px solid rgb(207, 207, 207);
-    color: rgb(156, 156, 156);
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.8rem;
-    padding: 20px;
-    display: flex;
-	margin:5px;
-    -webkit-box-align: center;
-    align-items: center;
-    cursor: pointer;
-   
-    font-size: 1.4rem;
-    height: 50px;	
-
+            background: #fff;
+            padding: 12px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .filters-bar select{
-        border: 1px solid rgb(207, 207, 207);
-    color: rgb(156, 156, 156);
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.8rem;
-    
-    display: flex;
-	margin:5px;
-    -webkit-box-align: center;
-    align-items: center;
-    cursor: pointer;
-   
-    font-size: 1.4rem;
-    height: 50px;	
+
+        /* Filters bar */
+        .filters-bar {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 10px 15px;
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .filters-bar select, .filters-bar button {
+            border: 1px solid #ccc;
+            border-radius: 0.8rem;
+            padding: 10px 14px;
+            font-size: 1rem;
+            cursor: pointer;
         }
 
         /* Restaurant cards */
@@ -78,37 +48,26 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease, scale 0.3s ease;
-            background: white;
-        }
-
-        .restaurant-card.show {
-            opacity: 1;
-            transform: translateY(0);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
         }
 
         .restaurant-card:hover {
-            transform: translateY(-5px) scale(1.03);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            cursor: pointer;
         }
 
         .restaurant-image {
+            width: 100%;
             height: 200px;
             object-fit: cover;
-            width: 100%;
-            transition: transform 0.3s ease;
         }
 
-        .restaurant-card:hover .restaurant-image {
-            transform: scale(1.05);
-        }
-
+        /* Offer badge top-left */
         .offer-badge {
             position: absolute;
-            bottom: 8px;
+            top: 8px;
             left: 8px;
             background: #007bff;
             color: white;
@@ -120,7 +79,7 @@
         .promoted-badge {
             position: absolute;
             top: 8px;
-            left: 8px;
+            right: 8px;
             background: rgba(0,0,0,0.6);
             color: white;
             font-size: 0.7rem;
@@ -128,83 +87,124 @@
             border-radius: 4px;
         }
 
+        .restaurant-details {
+            padding: 12px 15px;
+        }
+
+        .restaurant-details h5 {
+            margin-bottom: 4px;
+        }
+
+        .restaurant-details p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .restaurant-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
         .rating {
             background: #48c479;
-            color: white;
+            color: #fff;
             padding: 2px 6px;
             border-radius: 4px;
-            font-size: 0.85rem;
         }
-        .outer{
-        position: sticky;
-    	top: 0px;
-    	background-color: rgb(255, 255, 255);
-    	z-index: 3;
-    	width:100%;
-    }
     </style>
 </head>
- <body >
+<body>
 <%@ include file="navbar.jsp" %>
-   <div class="outer">
- <!-- Sticky Filters -->
-    <div class="filters-bar">
-        <button>Filters</button>
-        <button>Pure Veg</button>
-        <select>
-            <option>Cuisines</option>
-            <option>Biryani</option>
-            <option>Burgers</option>
-            <option>Pizza</option>
+
+<div class="outer">
+    <form method="get" action="DisplayRestaurant" class="filters-bar">
+        <select name="sortBy" onchange="this.form.submit()">
+            <option value="">Sort By</option>
+            <option value="price_low" <%= "price_low".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Price: Low to High</option>
+            <option value="price_high" <%= "price_high".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Price: High to Low</option>
+            <option value="rating_high" <%= "rating_high".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Rating: High to Low</option>
+            <option value="rating_low" <%= "rating_low".equals(request.getParameter("sortBy")) ? "selected" : "" %>>Rating: Low to High</option>
         </select>
-    </div></div>
-   
+
+        <select name="filter" onchange="this.form.submit()">
+            <option value="all" <%= ("all".equalsIgnoreCase(request.getParameter("filter")) || request.getParameter("filter") == null) ? "selected" : "" %>>Both</option>
+            <option value="veg" <%= "veg".equalsIgnoreCase(request.getParameter("filter")) ? "selected" : "" %>>Pure Veg</option>
+            <option value="non-veg" <%= "non-veg".equalsIgnoreCase(request.getParameter("filter")) ? "selected" : "" %>>Non-Veg</option>
+        </select>
+
+        <select name="cuisine" onchange="this.form.submit()">
+            <option value="">Cuisines</option>
+            <option value="Chinese" <%= "Chinese".equalsIgnoreCase(request.getParameter("cuisine")) ? "selected" : "" %>>Chinese</option>
+            <option value="Italian" <%= "Italian".equalsIgnoreCase(request.getParameter("cuisine")) ? "selected" : "" %>>Italian</option>
+            <option value="North Indian" <%= "North Indian".equalsIgnoreCase(request.getParameter("cuisine")) ? "selected" : "" %>>North Indian</option>
+            <option value="South Indian" <%= "South Indian".equalsIgnoreCase(request.getParameter("cuisine")) ? "selected" : "" %>>South Indian</option>
+        </select>
+    </form>
+</div>
+
 <div class="container py-4">
-    <h2 class="mb-4">Food Delivery Restaurants </h2>
+    <h2 class="mb-4">Food Delivery Restaurants</h2>
     <div class="row">
         <%
-            List<Restaurants> restaurants = (List<Restaurants>) request.getAttribute("restaurants");
-            if (restaurants != null) {
-                for (Restaurants r : restaurants) {
+            List<Restaurant> restaurants = (List<Restaurant>) request.getAttribute("restaurants");
+            if (restaurants == null || restaurants.isEmpty()) {
+        %>
+            <div class="col-12 text-center py-5">
+                <h4>No restaurants found.</h4>
+            </div>
+        <% 
+            } else {
+                for (Restaurant r : restaurants) { 
         %>
         <div class="col-md-4">
-            <div class="restaurant-card position-relative">
-                <% if (r.isPromoted()) { %>
-                    <div class="promoted-badge">Promoted</div>
-                <% } %>
-                <img src="<%= r.getImageUrl() %>" class="restaurant-image" alt="<%= r.getName() %>">
-                <div class="offer-badge"><%= r.getOffer() %></div>
-                <div class="p-3">
-                    <h5 class="mb-1"><%= r.getName() %></h5>
-                    <p class="text-muted mb-1" style="font-size: 0.9rem;"><%= r.getCuisine() %></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="rating"><%= r.getRating() %> ★</span>
-                        <span class="text-muted" style="font-size: 0.85rem;"><%= r.getPrice() %></span>
-                        <span class="text-muted" style="font-size: 0.85rem;"><%= r.getTime() %></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+		    <a href="<%= request.getContextPath() %>/DisplayMenu?restaurantId=<%= r.getRestaurantId() %>" style="text-decoration:none; color:inherit;">
+		        <div class="restaurant-card">
+		            <% if (r.isPromoted()) { %>
+		                <div class="promoted-badge">Promoted</div>
+		            <% } %>
+		            <% if (r.getOffer() != null && !r.getOffer().isEmpty()) { %>
+		                <div class="offer-badge"><%= r.getOffer() %></div>
+		            <% } %>
+		            <img src="images/restaurants/<%= r.getLogo() %>" 
+		                 onerror="this.onerror=null; this.src='images/restaurants/default-restaurant.png'"
+		                 class="restaurant-image" alt="<%= r.getName() %>">
+		            <div class="restaurant-details">
+		                <h5><%= r.getName() %></h5>
+		                <p class="text-muted"><%= r.getCuisine() %></p>
+		                <div class="restaurant-info">
+		                    <span class="rating"><%= r.getRating() %> ★</span>
+		                    <span>₹<%= r.getPrice() %> for two</span>
+		                    <span><%= r.getTime() %></span>
+		                </div>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+
+
         <% 
-                }
-            }
+                } 
+            } 
         %>
     </div>
 </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const cards = document.querySelectorAll('.restaurant-card');
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('show');
-                        observer.unobserve(entry.target); // animation triggers only once
-                    }
-                });
-            }, { threshold: 0.2 });
 
-            cards.forEach(card => observer.observe(card));
-        });
-    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cards = document.querySelectorAll('.restaurant-card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        cards.forEach(card => observer.observe(card));
+    });
+</script>
 </body>
 </html>

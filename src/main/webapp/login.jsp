@@ -16,7 +16,7 @@
             <h3>Login</h3>
           </div>
           <div class="card-body">
-            <form method="post" action="login">
+            <form method="post" action="/UserLogin">
               <div class="mb-3">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" required>
@@ -27,6 +27,9 @@
               </div>
               <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
+            <c:if test="${not empty errorMessage}">
+   				 <p style="color:red;">${errorMessage}</p>
+			</c:if>
           </div>
           <div class="card-footer text-center">
             Don't have an account? <a href="signup.jsp">Sign up</a>

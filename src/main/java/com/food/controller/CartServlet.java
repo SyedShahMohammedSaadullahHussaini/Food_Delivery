@@ -81,6 +81,10 @@ public class CartServlet extends HttpServlet {
 		
 		List<OrderItem> cartlist = new ArrayList<OrderItem>();
 		cartlist.add(null);
+//		if (cart == null || cart.isEmpty()) {
+//            response.sendRedirect("viewCart.jsp"); // cart empty
+//            return;
+//        }
 	}
 
 

@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +77,7 @@
         position: relative;
       }
 
-      .location {
+       .location {
         display: flex;
         align-items: center;
         margin-right: 10px;
@@ -88,13 +87,14 @@
         padding-right: 10px;
         cursor: pointer;
         position: relative;
-      }
+      } 
+      	      
 
       .location i {
         margin-right: 5px;
       }
 
-      /* Dropdown */
+     
       .dropdown {
         display: none;
         position: absolute;
@@ -104,9 +104,9 @@
         border: 1px solid #ddd;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
-        z-index: 10;
+        z-index: 1000;
         width: 200px;
-      }
+      } 
 
       .dropdown div {
         padding: 10px;
@@ -133,6 +133,15 @@
         font-size: 14px;
       }
 
+    .search-input button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #e35d6a;
+      margin-left: 5px;
+    }
+    
       .auth-links a {
         margin-left: 20px;
         text-decoration: none;
@@ -164,34 +173,25 @@
           <!-- Dropdown Menu -->
           <div class="dropdown" id="cityDropdown">
             <div onclick="selectCity('Bengaluru')">Bengaluru</div>
-            <div onclick="selectCity('Delhi')">Delhi</div>
-            <div onclick="selectCity('Mumbai')">Mumbai</div>
-            <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
+	        <div onclick="selectCity('Delhi')">Delhi</div>
+	        <div onclick="selectCity('Mumbai')">Mumbai</div>
+	        <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
           </div>
         </div>
 
-        <div class="search-input">
-          <i class="fa-solid fa-magnifying-glass" style="color: gray"></i>
-          <input
-            type="text"
-            placeholder="Search for restaurant, cuisine or a dish"
-          />
-        </div>
+         <form action="SearchServlet" method="get" style="flex:1; display:flex;">
+	      <div class="search-input">
+	        <i class="fa-solid fa-magnifying-glass" style="color: gray"></i>
+	        <input type="text" name="query" placeholder="Search for restaurant, cuisine or a dish" />
+	        <button type="submit">Search</button>
+	      </div>
+	    </form>
       </div>
 
-     <div class="auth-links">
-	  <c:choose>
-	    <c:when test="${not empty sessionScope.currentUser}">
-	      <span>Welcome, ${sessionScope.currentUser.uName}</span>
-	      <a href="LogoutServlet">Logout</a>
-	    </c:when>
-	    <c:otherwise>
-	      <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
-	      <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
-	    </c:otherwise>
-	  </c:choose>
-	</div>
-
+      <div class="auth-links">
+        <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
+        <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
+      </div>
     </div>
 
     <script>

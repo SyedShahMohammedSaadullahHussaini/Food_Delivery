@@ -1,15 +1,19 @@
 package com.foodexpress.updatedDTO;
 
-import java.math.BigDecimal;
+
 
 public class OrderItem {
     private int orderItemId;     // order_item_id (PK)
     private int orderId;         // FK to orders
     private int itemId;          // FK to menu_item
     private int quantity;        // quantity
-    private BigDecimal priceAtOrder; // price_at_order
+    private double priceAtOrder; // price_at_order
 
-    // Getters and Setters
+    public OrderItem(int itemId2, String itemName, double itemPrice, int i) {
+		// TODO Auto-generated constructor stub
+	}
+    
+	// Getters and Setters
     public int getOrderItemId() {
         return orderItemId;
     }
@@ -38,10 +42,10 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPriceAtOrder() {
+    public double getPriceAtOrder() {
         return priceAtOrder;
     }
-    public void setPriceAtOrder(BigDecimal priceAtOrder) {
+    public void setPriceAtOrder(double priceAtOrder) {
         this.priceAtOrder = priceAtOrder;
     }
 }

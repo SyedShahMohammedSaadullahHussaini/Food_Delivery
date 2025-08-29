@@ -286,6 +286,38 @@ public class RestaurantDAO {
 //*****************************************************************
 
 
+	    
+	    
+	    public List<Restaurant> searchRestaurants(String keyword) {
+	        List<Restaurant> restaurants = new ArrayList<>();
+
+	        String sql = "SELECT DISTINCT r.* " +
+	                     "FROM restaurant r " +
+	                     "LEFT JOIN menu_items m ON r.restaurant_id = m.restaurant_id " +
+	                     "WHERE r.restaurant_name LIKE ? OR r.cuisine LIKE ? OR m.item_name LIKE ?";
+
+	        try (Connection conn = DBConnection.giveConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	            String searchKey = "%" + keyword + "%";
+	            ps.setString(1, searchKey);
+	            ps.setString(2, searchKey);
+	            ps.setString(3, searchKey);
+
+	            ResultSet rs = ps.executeQuery();
+	            while (rs.next()) {
+	                Restaurant r = extractRestaurantFromResultSet(rs); // ✅ reuse helper
+	                restaurants.add(r);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return restaurants;
+	    }
+
+	    
+	    
+	    
 
     // Add Restaurant
     public boolean addRestaurant(Restaurant r) {

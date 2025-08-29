@@ -14,12 +14,12 @@
         /* Outer container */
         .outer {
             width: 100%;
-            background: #fff;
+            background: #fff; 
             padding: 12px 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            position: sticky;
+            position: sticky; 
             top: 0;
-            z-index: 100;
+            /* z-index: 100; */
         }
 
         /* Filters bar */
@@ -116,8 +116,8 @@
     </style>
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
-
+ <%@ include file="navbar.jsp" %>
+ 
 <div class="outer">
     <form method="get" action="DisplayRestaurant" class="filters-bar">
         <select name="sortBy" onchange="this.form.submit()">

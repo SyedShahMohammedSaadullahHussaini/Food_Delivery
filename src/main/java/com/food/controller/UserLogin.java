@@ -25,26 +25,39 @@ public class UserLogin extends HttpServlet {
     	dao=new UserDAO();
     }
     
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        // If someone hits /UserLogin directly → show login page
+        RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
+        rd.forward(req, resp);
+    }
+    
+    
+    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");
 		
+		
 		User user = dao.validateUser(email, pass);
 
+		
         if (user != null) {
-            // ✅ login success → store user in session
+            //login success -> store user in session
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
 
             // Forward to DisplayRestaurant servlet
             RequestDispatcher rd = request.getRequestDispatcher("/DisplayRestaurant");
+            
             rd.forward(request, response);
 
-            // OR, if you want browser URL to change:
-            // response.sendRedirect("DisplayRestaurant");
-
+//            response.sendRedirect("DisplayRestaurant");
+            
         } else {
-            // ❌ login failed → show error
+            //  login failed --> show error
             request.setAttribute("errorMessage", "Invalid Email or Password");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);

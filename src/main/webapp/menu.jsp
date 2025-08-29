@@ -495,14 +495,17 @@
                                 <span class="nonveg-icon"></span> Non-Vegetarian
                             <% } %>
                         </div>
-                           <!-- Add to Cart Form -->
-					    <form action="#" method="post" style="display:inline;">
-					        <input type="hidden" name="itemName" value="<%= item.getItemName() %>">
-					        <input type="hidden" name="itemPrice" value="<%= item.getPrice() %>">
-					        <button type="submit" class="add-btn">
-					            <i class="fas fa-plus"></i> Add
-					        </button>
-					    </form>
+                          <!-- Add to Cart Form -->
+						<form action="CartServlet" method="post" style="display:inline;">
+						    <input type="hidden" name="action" value="add">
+						    <input type="hidden" name="itemId" value="<%= item.getItemId() %>">
+						    <input type="hidden" name="itemName" value="<%= item.getItemName() %>">
+						    <input type="hidden" name="itemPrice" value="<%= item.getPrice() %>">
+						    <button type="submit" class="add-btn">
+						        <i class="fas fa-plus"></i> Add
+						    </button>
+						</form>
+
                     </div>
                 </div>
             </div>

@@ -52,12 +52,12 @@
   </div>
 </div>
 
-<!-- Login Modal -->
+<!-- Login Modal-->
 <div id="loginModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('loginModal')">&times;</span>
     <h2 class="text-center">Login</h2>
-    <form action="UserLogin" method="post">
+    <form action="UserLogin" method="get">
       <input type="email" name="email" placeholder="Email" class="form-control mb-3" required>
       <input type="password" name="password" placeholder="Password" class="form-control mb-3" required>
       <button type="submit"  class="btn btn-custom w-100">Login</button>

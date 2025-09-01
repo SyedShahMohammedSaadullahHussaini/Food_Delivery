@@ -10,8 +10,8 @@ public class OrderItem {
     private double priceAtOrder; // price_at_order
 
     public OrderItem(int itemId2, String itemName, double itemPrice, int i) {
-		// TODO Auto-generated constructor stub
-	}
+
+    }
     
 	// Getters and Setters
     public int getOrderItemId() {

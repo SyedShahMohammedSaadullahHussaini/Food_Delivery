@@ -66,6 +66,7 @@ public class UserDAO {
 
     // User Login
     public User validateUser(String uEmail, String password) {
+    	System.out.println("entered!!!!");
         String sqry = "SELECT * FROM users WHERE uEmail = ? AND password = ?";
         try (PreparedStatement ps = DBConnection.giveConnection().prepareStatement(sqry)) {
             ps.setString(1, uEmail);

@@ -25,17 +25,9 @@ public class UserLogin extends HttpServlet {
     	dao=new UserDAO();
     }
     
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
-        // If someone hits /UserLogin directly → show login page
-        RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-        rd.forward(req, resp);
-    }
     
     
-    
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String email = request.getParameter("email");
 		String pass = request.getParameter("password");

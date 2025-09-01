@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.foodexpress.updatedDTO.User"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,35 +23,18 @@
       }
 
       .navbar {
-        /* position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        height: 75px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px 30px;
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); */
-
-        
         padding-right: 0px;
         margin: 0;
         display: flex;
         flex-wrap: nowrap;
         height: 100%;
-        -webkit-box-pack: justify;
         justify-content: space-between;
-        -webkit-box-align: center;
         align-items: center;
         position: relative;
         z-index: 4;
         background-color: white;
         border-bottom: 1px solid #ddd;
         padding: 5px 20px;
-
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
 
@@ -74,10 +58,9 @@
         padding: 8px 12px;
         width: 500px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        position: relative;
       }
 
-       .location {
+      .location {
         display: flex;
         align-items: center;
         margin-right: 10px;
@@ -87,14 +70,12 @@
         padding-right: 10px;
         cursor: pointer;
         position: relative;
-      } 
-      	      
+      }
 
       .location i {
         margin-right: 5px;
       }
 
-     
       .dropdown {
         display: none;
         position: absolute;
@@ -106,7 +87,7 @@
         border-radius: 6px;
         z-index: 1000;
         width: 200px;
-      } 
+      }
 
       .dropdown div {
         padding: 10px;
@@ -133,15 +114,15 @@
         font-size: 14px;
       }
 
-    .search-input button {
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 14px;
-      color: #e35d6a;
-      margin-left: 5px;
-    }
-    
+      .search-input button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: #e35d6a;
+        margin-left: 5px;
+      }
+
       .auth-links a {
         margin-left: 20px;
         text-decoration: none;
@@ -152,14 +133,64 @@
       .auth-links a:hover {
         color: #000;
       }
+
+      /* ------------------ User dropdown CSS ------------------ */
+      .user-dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .user-name {
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+
+      .user-name:hover {
+        background: #f5f5f5;
+      }
+
+      .user-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 5px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        min-width: 150px;
+        z-index: 1000;
+        flex-direction: column;
+      }
+
+      .user-menu a {
+        padding: 10px 15px;
+        display: block;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .user-menu a:hover {
+        background: #f5f5f5;
+        color: #e35d6a;
+      }
     </style>
   </head>
   <body>
-  <jsp:include page="auth.jsp" />
-  <!-- OTP Popup (included but hidden) -->
-<div id="otpContainer">
-  <jsp:include page="otpverify.jsp" />
-</div>
+    <jsp:include page="auth.jsp" />
+    <!-- OTP Popup (included but hidden) -->
+    <div id="otpContainer">
+      <jsp:include page="otpverify.jsp" />
+    </div>
 
     <div class="navbar">
       <div class="logo">FoodieExpress</div>
@@ -173,28 +204,46 @@
           <!-- Dropdown Menu -->
           <div class="dropdown" id="cityDropdown">
             <div onclick="selectCity('Bengaluru')">Bengaluru</div>
-	        <div onclick="selectCity('Delhi')">Delhi</div>
-	        <div onclick="selectCity('Mumbai')">Mumbai</div>
-	        <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
+            <div onclick="selectCity('Delhi')">Delhi</div>
+            <div onclick="selectCity('Mumbai')">Mumbai</div>
+            <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
           </div>
         </div>
 
-         <form action="SearchServlet" method="get" style="flex:1; display:flex;">
-	      <div class="search-input">
-	        <i class="fa-solid fa-magnifying-glass" style="color: gray"></i>
-	        <input type="text" name="query" placeholder="Search for restaurant, cuisine or a dish" />
-	        <button type="submit">Search</button>
-	      </div>
-	    </form>
+        <form action="SearchServlet" method="get" style="flex:1; display:flex;">
+          <div class="search-input">
+            <i class="fa-solid fa-magnifying-glass" style="color: gray"></i>
+            <input type="text" name="query" placeholder="Search for restaurant, cuisine or a dish" />
+            <button type="submit">Search</button>
+          </div>
+        </form>
       </div>
-
-      <div class="auth-links">
-        <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
-        <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
-      </div>
+      
+      <%  
+        User u = (User) session.getAttribute("currentUser");
+        if (u == null) {
+      %>       
+        <div class="auth-links">
+          <a href="javascript:void(0);" onclick="openModal('loginModal')">Log in</a>
+          <a href="javascript:void(0);" onclick="openModal('signinModal')">Sign up</a>
+        </div>
+      <% 
+        } else { 
+          String uName = u.getuName(); 
+      %>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-name"><%= uName %> <i class="fa-solid fa-caret-down" style="margin-left:5px;"></i></div>
+          <div class="user-menu" id="userMenu">
+            <a href="profile.jsp">Profile</a>
+            <a href="orders.jsp">Orders</a>
+            <a href="logout">Logout</a>
+          </div>
+        </div>
+      <% } %>
     </div>
 
     <script>
+      // City dropdown
       const locationSelector = document.getElementById("locationSelector");
       const cityDropdown = document.getElementById("cityDropdown");
       const selectedCity = document.getElementById("selectedCity");
@@ -209,13 +258,31 @@
         cityDropdown.style.display = "none";
       }
 
-      // Close dropdown if clicked outside
+      // Close city dropdown if clicked outside
       document.addEventListener("click", (event) => {
         if (!locationSelector.contains(event.target)) {
           cityDropdown.style.display = "none";
         }
       });
-      
+
+      // User dropdown toggle on click
+      const userDropdown = document.getElementById("userDropdown");
+      const userMenu = document.getElementById("userMenu");
+
+      if (userDropdown) {
+        userDropdown.addEventListener("click", (e) => {
+          e.stopPropagation();
+          userMenu.style.display =
+            userMenu.style.display === "flex" ? "none" : "flex";
+        });
+      }
+
+      // Close user menu if clicked outside
+      document.addEventListener("click", (event) => {
+        if (userMenu && !userDropdown.contains(event.target)) {
+          userMenu.style.display = "none";
+        }
+      });
     </script>
   </body>
 </html>

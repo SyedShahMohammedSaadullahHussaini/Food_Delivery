@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class Orders {
     private int orderId;
-    private int uId;
+    private Integer uId; // can be null
     private int restaurantId;
     private BigDecimal totalAmount;
-    private String orderStatus;
-    private String paymentMethod;
-    private LocalDateTime orderTime;
-    private String deliveryAddress;
+    private String status; // placed, confirmed, etc.
+    private Integer deliveryAddressId; // can be null
+    private LocalDateTime placedAt;
+    private LocalDateTime updatedAt;
 
     // Getters and Setters
     public int getOrderId() {
@@ -20,46 +20,53 @@ public class Orders {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-    public int getuId() {
+
+    public Integer getuId() {
         return uId;
     }
-    public void setuId(int uId) {
+    public void setuId(Integer uId) {
         this.uId = uId;
     }
+
     public int getRestaurantId() {
         return restaurantId;
     }
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
     }
+
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
-    public String getOrderStatus() {
-        return orderStatus;
+
+    public String getStatus() {
+        return status;
     }
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
-    public String getPaymentMethod() {
-        return paymentMethod;
+
+    public Integer getDeliveryAddressId() {
+        return deliveryAddressId;
     }
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setDeliveryAddressId(Integer deliveryAddressId) {
+        this.deliveryAddressId = deliveryAddressId;
     }
-    public LocalDateTime getOrderTime() {
-        return orderTime;
+
+    public LocalDateTime getPlacedAt() {
+        return placedAt;
     }
-    public void setOrderTime(LocalDateTime orderTime) {
-        this.orderTime = orderTime;
+    public void setPlacedAt(LocalDateTime placedAt) {
+        this.placedAt = placedAt;
     }
-    public String getDeliveryAddress() {
-        return deliveryAddress;
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

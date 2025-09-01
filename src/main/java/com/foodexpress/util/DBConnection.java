@@ -13,7 +13,7 @@ public class DBConnection {
 		Connection con =null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/foodexpress2","root","9600tharun");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/foodexpress2","root","MySql@!vinay_06");
 			return con;
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

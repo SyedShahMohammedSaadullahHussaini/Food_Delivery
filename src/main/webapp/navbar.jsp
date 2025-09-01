@@ -209,6 +209,7 @@
             <div onclick="selectCity('Ahmedabad')">Ahmedabad</div>
           </div>
         </div>
+        <!-- Hello -->
 
         <form action="SearchServlet" method="get" style="flex:1; display:flex;">
           <div class="search-input">

@@ -50,4 +50,14 @@ public class MenuItems {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+	@Override
+	public String toString() {
+		return "MenuItems [itemId=" + itemId + ", restaurantId=" + restaurantId + ", categoryId=" + categoryId
+				+ ", itemName=" + itemName + ", description=" + description + ", price=" + price + ", isVeg=" + isVeg
+				+ ", isAvailable=" + isAvailable + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ ", imageUrl=" + imageUrl + "]";
+	}
+    
+    
+    
 }

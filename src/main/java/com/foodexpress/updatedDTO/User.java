@@ -23,7 +23,19 @@ public class User {
     private String city;
     private String pincode;
 
-    public User() {
+    
+    
+    
+    
+    public User(String uName, String uEmail, String password, String uPhone) {
+		super();
+		this.uName = uName;
+		this.uEmail = uEmail;
+		this.password = password;
+		this.uPhone = uPhone;
+	}
+
+	public User() {
     }
 
     // Getters and Setters

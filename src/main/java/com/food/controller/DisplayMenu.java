@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.annotation.WebServlet;
 
 import com.foodexpress.updatedDAO.MenuDAO;
@@ -29,6 +30,9 @@ public class DisplayMenu extends HttpServlet {
         if (restIdStr != null && !restIdStr.isEmpty()) {
             try {
                 int restaurantId = Integer.parseInt(restIdStr);
+                HttpSession session = request.getSession(false);
+                session.setAttribute("currentRestaurantId", restaurantId);
+                
 
                 // Fetch restaurant details
                 Restaurant restaurant = restaurantDAO.getRestaurantById(restaurantId);

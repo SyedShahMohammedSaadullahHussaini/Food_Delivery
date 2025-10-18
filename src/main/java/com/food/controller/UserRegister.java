@@ -2,9 +2,10 @@ package com.food.controller;
 
 import java.io.IOException;
 
-import com.User.dto.User;
-import com.food.dao.UserDAO;
 
+import com.foodexpress.updatedDAO.*;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,6 +39,7 @@ public class UserRegister extends HttpServlet {
         session.setAttribute("name", name);
         session.setAttribute("phoneNo", phone);
         session.setAttribute("password", pass);
+        
 
         String subject = "Your OTP for Registration";
         String message = ""
@@ -93,20 +95,15 @@ public class UserRegister extends HttpServlet {
         if (mailSent) {
             // Redirect to OTP verification page
 			/* response.sendRedirect("otpverify.jsp"); */
-        	response.setContentType("text/plain");
-        	response.getWriter().write("otp_sent");
+        	System.out.println("mail is sent");
+        	RequestDispatcher rd = request.getRequestDispatcher("otpverify.jsp");
+        	rd.forward(request, response);
 
         } else {
             response.getWriter().println("Failed to send OTP. Please try again.");
         }
 
-//		User user = new User(uid, name, email, phone, pass, address, city, state);
-//		boolean registered = dao.registerUser(user);
 //		
-//		if(registered) {
-//			response.sendRedirect("userlogin.jsp");
-//		}
-		
 	}
 
 }

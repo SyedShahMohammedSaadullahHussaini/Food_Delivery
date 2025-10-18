@@ -17,6 +17,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20230227</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -33,7 +40,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-<!--JSTL dependencies-->
+		<!--JSTL dependencies-->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -58,7 +65,7 @@
 		</dependency>
 
 
-<!--Email dependencies-->
+		<!--Email dependencies-->
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>

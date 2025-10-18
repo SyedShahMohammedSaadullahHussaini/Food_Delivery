@@ -26,6 +26,27 @@ public class MenuDAO {
         }
         return false;
     }
+    
+ // Get single Menu Item by Item ID
+    public MenuItems getMenuItemById(int itemId) {
+        String sql = "SELECT * FROM menu_item WHERE item_id = ?";
+        try (PreparedStatement ps = DBConnection.giveConnection().prepareStatement(sql)) {
+            ps.setInt(1, itemId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return extractMenuItem(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // if not found
+    }
+
+    
+    
+    
+    
+    
 
     // Get All Menu Items by Restaurant ID
     public List<MenuItems> getMenuByRestaurant(int restaurantId) {

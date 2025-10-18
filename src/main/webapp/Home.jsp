@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ page import="java.util.*, demo.Restaurants" %>
-    
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, demo.Restaurants"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
-
-<a href="sendrest" class="btn btn-primary">
-    View Restaurants
-</a>
-
-<%@ include file="container.jsp" %>
+	<jsp:include page="container.jsp" />
 </body>
 </html>

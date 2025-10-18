@@ -115,7 +115,7 @@ public class DisplayRestaurant extends HttpServlet {
         request.setAttribute("restaurants", list);
 
         // Forward to JSP
-        RequestDispatcher rd = request.getRequestDispatcher("container.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("Home.jsp");
         rd.forward(request, response);
     }
 }

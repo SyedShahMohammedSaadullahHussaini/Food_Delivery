@@ -75,6 +75,8 @@ public class UserDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return extractUserFromResultSet(rs);
+            }else {
+            	System.out.println("result set is null while logging in");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,8 +91,9 @@ public class UserDAO {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next())
+            if (rs.next()) {
                 return extractUserFromResultSet(rs);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

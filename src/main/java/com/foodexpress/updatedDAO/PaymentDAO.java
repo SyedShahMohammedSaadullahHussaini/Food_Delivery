@@ -8,6 +8,7 @@ public class PaymentDAO {
 
     // 1. Make Payment
     public boolean makePayment(Payment payment) {
+    	
         String sql = "INSERT INTO payment (order_id, payment_method, payment_status, amount_paid, transaction_time) "
                    + "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = DBConnection.giveConnection().prepareStatement(sql)) {
@@ -27,6 +28,7 @@ public class PaymentDAO {
 
     // 2. Get Payment by Order ID
     public Payment getPaymentByOrderId(int orderId) {
+    	System.out.println("Fetching payment for orderId: " + orderId);
         String sql = "SELECT payment_id, order_id, payment_method, payment_status, amount_paid, transaction_time "
                    + "FROM payment WHERE order_id = ?";
         try (PreparedStatement ps = DBConnection.giveConnection().prepareStatement(sql)) {
@@ -34,7 +36,10 @@ public class PaymentDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+            	System.out.println("Payment found: " + rs.getString("payment_method"));
                 return extractPayment(rs);
+            }else {
+                System.out.println("No payment found for orderId: " + orderId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
